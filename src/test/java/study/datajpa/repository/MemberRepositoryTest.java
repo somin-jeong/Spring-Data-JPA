@@ -183,6 +183,7 @@ public class MemberRepositoryTest {
 
         //when
         Slice<Member> page = memberRepository.findByAge(age, pageRequest);
+        page.map(m -> new MemberDto(m.getId(), m.getUsername(), null));
 
         //then
         List<Member> content = page.getContent(); // 조회된 데이터
