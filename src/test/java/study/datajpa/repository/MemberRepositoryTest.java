@@ -226,4 +226,39 @@ public class MemberRepositoryTest {
         assertThat(resultCount).isEqualTo(3);
     }
 
+    @Test
+    public void findMemberLazy() throws Exception {
+        //given
+        //member1 -> teamA
+        //member2 -> teamB
+
+        Team teamA = new Team("teamA");
+        Team teamB = new Team("teamB");
+        teamRepository.save(teamA);
+        teamRepository.save(teamB);
+
+        memberRepository.save(new Member("member1", 10, teamA));
+        memberRepository.save(new Member("member2", 20, teamB));
+        em.flush();
+        em.clear();
+
+        // when
+        // Member, Team 같이 조회함 -> Team에 실제 객체가 들어감
+        List<Member> members = memberRepository.findMemberFetchJoin();
+        List<Member> members2 = memberRepository.findAll();
+        List<Member> members3 = memberRepository.findMemberEntityGraph();
+        List<Member> members4 = memberRepository.findEntityGraphByUsername("member1");
+
+        // then
+        for (Member member : members) {
+            System.out.println("member.getUsername() = " + member.getUsername());
+
+            // @EntityGraph 사용 안하면 프록시 가짜 객체가 출력됨
+            System.out.println("member.getTeam().getClass() = " + member.getTeam().getClass());
+
+            // @EntityGraph 사용 안하면 이 때 Team 조회하는 쿼리 나감
+            System.out.println("member.getTeam().getName() = " + member.getTeam().getName());
+        }
+    }
+
 }
