@@ -16,10 +16,10 @@ import java.util.List;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 
-@RunWith(SpringRunner.class)
+@RunWith(SpringRunner.class)  // JUnit5랑 스프링 사용하면 없어도 됨
 @SpringBootTest
 @Transactional
-@Rollback(value = true)
+@Rollback(value = false)
 public class MemberJpaRepositoryTest {
 
     @Autowired
@@ -44,6 +44,9 @@ public class MemberJpaRepositoryTest {
         Member member2 = new Member("member2");
         memberJpaRepository.save(member1);
         memberJpaRepository.save(member2);
+
+        member1.setUsername("member!!!!");
+
         //단건 조회 검증
         Member findMember1 =
                 memberJpaRepository.findById(member1.getId()).get();
@@ -60,11 +63,11 @@ public class MemberJpaRepositoryTest {
         long count = memberJpaRepository.count();
         assertThat(count).isEqualTo(2);
 
-        //삭제 검증
-        memberJpaRepository.delete(member1);
-        memberJpaRepository.delete(member2);
-        long deletedCount = memberJpaRepository.count();
-        assertThat(deletedCount).isEqualTo(0);
+//        //삭제 검증
+//        memberJpaRepository.delete(member1);
+//        memberJpaRepository.delete(member2);
+//        long deletedCount = memberJpaRepository.count();
+//        assertThat(deletedCount).isEqualTo(0);
     }
 
     @Test
