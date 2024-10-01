@@ -1,23 +1,41 @@
+#spring:
+#  datasource:
+#    url: ${DATASOURCE_URL_PROD}
+#    username: ${DATASOURCE_USERNAME}
+#    password: ${DATASOURCE_PASSWORD}
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    dbcp2:
+#      validation-query: select 1
+#  sql:
+#    init:
+#      platform: mysql
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#    properties:
+#      hibernate:
+#        #        show_sql: true
+#        format_sql: true
+#        dialect: org.hibernate.dialect.MySQLDialect
+#
+#logging.level:
+#  org.hibernate.SQL: debug
+#  org.hibernate.orm.jdbc.bind: trace
+
 spring:
   datasource:
-    url: ${DATASOURCE_URL_PROD}
-    username: ${DATASOURCE_USERNAME}
-    password: ${DATASOURCE_PASSWORD}
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    dbcp2:
-      validation-query: select 1
-  sql:
-    init:
-      platform: mysql
+    url: jdbc:h2:tcp://localhost/~/datajpa
+    username: sa
+    password:
+    driver-class-name: org.h2.Driver
   jpa:
     hibernate:
       ddl-auto: create
     properties:
       hibernate:
-        #        show_sql: true
+      # show_sql: true
         format_sql: true
-        dialect: org.hibernate.dialect.MySQLDialect
 
 logging.level:
   org.hibernate.SQL: debug
-  org.hibernate.orm.jdbc.bind: trace
+# org.hibernate.type: trace
