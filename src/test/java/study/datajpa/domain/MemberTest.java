@@ -63,11 +63,11 @@ public class MemberTest {
         memberRepository.save(member); // @PrePersist
 
         Thread.sleep(100);
-        member.setUsername("member2");
+        member.setUsername("member2"); // @PreUpdate
 
         System.out.println("=====================");
 
-        em.flush(); // @PreUpdate
+        em.flush();
         em.clear();
 
         System.out.println("=====================");
@@ -77,7 +77,7 @@ public class MemberTest {
 
         //then
         System.out.println("findMember.createdDate = " + findMember.getCreatedDate());
-        System.out.println("findMember.updatedDate = " + findMember.getUpdatedDate());
+        System.out.println("findMember.updatedDate = " + findMember.getLastModifiedDate());
     }
 
 }
